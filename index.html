@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Two Kittens: A Starter Kit</title>
+  <meta name="description" content="A starter shopping list for a house with two new kittens, grouped by what the cats will do with it.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=DM+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400..600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1C2A21;
+      --ink-soft: #4E6053;
+      --paper: #E7ECE2;
+      --card: #FCFAF4;
+      --line: #C6D0C1;
+      --marigold: #E0942A;
+      --blush: #D79AA1;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 17px;
+      line-height: 1.55;
+    }
+
+    .page_wrap {
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 56px 24px 40px;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--marigold);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    .text-mono {
+      font-family: 'DM Mono', ui-monospace, monospace;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 20px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    /* Header */
+
+    .header_eyebrow {
+      color: var(--ink-soft);
+      margin-bottom: 18px;
+    }
+
+    .header_title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: clamp(34px, 6vw, 48px);
+      line-height: 1.17;
+      letter-spacing: -0.032em;
+      max-width: 15ch;
+    }
+
+    .header_title .is-marigold { color: var(--marigold); }
+
+    .header_lede {
+      color: var(--ink-soft);
+      font-size: 19px;
+      max-width: 58ch;
+      margin-top: 16px;
+    }
+
+    .header_meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 28px;
+      justify-content: space-between;
+      border-top: 1px solid var(--line);
+      margin-top: 32px;
+      padding-top: 12px;
+      color: var(--ink-soft);
+    }
+
+    .header_meta .meta_tally { color: var(--ink); }
+
+    /* Sections */
+
+    .section_block { margin-top: 56px; }
+
+    .section_header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 10px;
+      margin-bottom: 18px;
+    }
+
+    .section_verb {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 1.29;
+      letter-spacing: -0.006em;
+    }
+
+    .section_note {
+      color: var(--ink-soft);
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .section_grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    /* Cards */
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 160ms ease-out, box-shadow 160ms ease-out, opacity 200ms ease-out;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(28, 42, 33, 0.10);
+    }
+
+    .card.is-recommended { border: 2px solid var(--marigold); }
+
+    .card_badge {
+      align-self: flex-start;
+      background: var(--marigold);
+      color: var(--card);
+      border-radius: 999px;
+      padding: 1px 10px;
+    }
+
+    .card_title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 600;
+      font-size: 19px;
+      line-height: 1.26;
+    }
+
+    .card_why { color: var(--ink-soft); }
+
+    .card_row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: auto;
+      padding-top: 6px;
+    }
+
+    .card_open {
+      color: var(--ink);
+      text-decoration: underline;
+      text-decoration-color: var(--marigold);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+    }
+
+    .card_open:hover { color: var(--marigold); }
+
+    .card_source { color: var(--ink-soft); }
+
+    .card_button {
+      margin-left: auto;
+      font-family: 'DM Mono', ui-monospace, monospace;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: transparent;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      padding: 6px 16px;
+      cursor: pointer;
+      transition: background 140ms ease-out, color 140ms ease-out;
+    }
+
+    .card_button:hover { background: var(--line); }
+
+    /* Checked state */
+
+    .card.is-checked { opacity: 0.5; }
+    .card.is-checked .card_title { text-decoration: line-through; }
+    .card.is-checked .card_button {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--card);
+    }
+
+    /* Closing panel */
+
+    .panel_closing {
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      margin-top: 64px;
+    }
+
+    .panel_heading {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 1.29;
+      letter-spacing: -0.006em;
+    }
+
+    .panel_intro {
+      color: var(--line);
+      margin-top: 10px;
+      max-width: 52ch;
+    }
+
+    .panel_list {
+      list-style: none;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .panel_lead {
+      color: var(--blush);
+      font-weight: 600;
+    }
+
+    /* Footer */
+
+    .page_footer {
+      color: var(--ink-soft);
+      text-align: center;
+      margin-top: 48px;
+    }
+
+    @media (max-width: 720px) {
+      .section_grid { grid-template-columns: 1fr; }
+      .page_wrap { padding-top: 40px; }
+      .section_header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+      }
+      .section_note { text-align: left; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition: none !important;
+        animation: none !important;
+      }
+      .card:hover { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page_wrap">
+
+    <header>
+      <p class="text-mono header_eyebrow">Congratulations on the cats</p>
+      <h1 class="header_title">Two kittens, <span class="is-marigold">one</span> shopping list</h1>
+      <p class="header_lede">What I would buy first, grouped by what the cats will actually do with it. Start with the litter boxes, the scratchers, and the water fountain. Everything else can arrive whenever it arrives.</p>
+      <div class="text-mono header_meta">
+        <span class="meta_tally" id="tally" aria-live="polite">0 checked off</span>
+        <span>Marked items are ones I use</span>
+        <span>Tap a link to open it</span>
+      </div>
+    </header>
+
+    <section class="section_block">
+      <div class="section_header">
+        <h2 class="section_verb">Climb</h2>
+        <p class="text-mono section_note">Two cats, one tower</p>
+      </div>
+      <div class="section_grid">
+        <article class="card">
+          <h3 class="card_title">NUNU LAB cat tree tower with scratching platforms</h3>
+          <p class="card_why">Built for multi-cat homes, so there are enough levels that nobody has to lose a standoff. Vertical space is the cheapest way to stop two kittens from getting on each other's nerves.</p>
+          <div class="card_row">
+            <a class="card_open" href="https://www.amazon.com/dp/B0DRP7F3XY" target="_blank" rel="noopener">Open</a>
+            <span class="text-mono card_source">Amazon</span>
+            <button class="card_button" type="button" aria-pressed="false">Got it</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section_block">
+      <div class="section_header">
+        <h2 class="section_verb">Perch</h2>
+        <p class="text-mono section_note">Depends on the window</p>
+      </div>
+      <div class="section_grid">
+        <article class="card">
+          <h3 class="card_title">Zakkart window sill perch with bolster</h3>
+          <p class="card_why">Sits on the sill and holds its own weight, with a raised edge to lean against. The easier choice if the sills are deep enough, since nothing has to stick to the glass.</p>
+          <div class="card_row">
+            <a class="card_open" href="https://www.amazon.com/dp/B0CBTXSBFW" target="_blank" rel="noopener">Open</a>
+            <span class="text-mono card_source">Amazon</span>
+            <button class="card_button" type="button" aria-pressed="false">Got it</button>
+          </div>
+        </article>
+        <article class="card">
+          <h3 class="card_title">K&amp;H EZ Mount cat window perch</h3>
+          <p class="card_why">Suction-mounts to the glass with no drilling, so it works on a shallow sill or a rental. Check the cups every few weeks and press them back down.</p>
+          <div class="card_row">
+            <a class="card_open" href="https://www.chewy.com/kh-pet-products-ez-mount-cat-window/dp/128081" target="_blank" rel="noopener">Open</a>
+            <span class="text-mono card_source">Chewy</span>
+            <button class="card_button" type="button" aria-pressed="false">Got it</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section_block">
+      <div class="section_header">
+        <h2 class="section_verb">Supervise</h2>
+        <p class="text-mono section_note">Four versions, pick one</p>
+      </div>
+      <div class="section_grid">
+        <article class="card">
+          <h3 class="card_title">JinxZap XL desk bed, washable cover</h3>
+          <p class="card_why">The roomiest of the four and the cover comes off for washing, which is the part that matters after a month. If both kittens are going to pile in, this is the one.</p>
+          <div class="card_row">
+            <a class="card_open" href="https://www.amazon.com/dp/B0FLPD2KKG" target="_blank" rel="noopener">Open</a>
+            <span class="text-mono card_source">Amazon</span>
+            <button class="card_button" type="button" aria-pressed="false">Got it</button>
+          </div>
+        </article>
+        <article class="card">
+          <h3 class="card_title">ANWA desk hammock bed</h3>
+          <p class="card_why">Hangs like a hammock instead of sitting on a rigid shelf. Cats sink into it, which some love and some refuse outright.</p>
+          <div class="card_row">
+            <a class="card_open" href="https://www.amazon.com/dp/B0GWHGKKL3" target="_blank" rel="noopener">Open</a>
+            <span class="text-mono card_source">Amazon</span>
+            <button class="card_button" type="button" aria-pressed="false">Got it</button>
+          </div>
+        </article>
+        <article class="card">
+          <h3 class="card_title">Chumajor adjustable desk bed</h3>
+          <p class="card_why">Clamps to the desk edge with an adjustable bracket. Measure the desktop thickness before ordering, since that is what these fail on.</p>
+          <div class="card_row">
+            <a class="card_open" href="https://www.amazon.com/dp/B0DJQHDSKK" target="_blank" rel="noopener">Open</a>
+            <span class="text-mono card_source">Amazon</span>
+            <button class="card_button" type="button" aria-pressed="false">Got it</button>
+          </div>
+        </article>
+        <article class="card">
+          <h3 class="card_title">Unidevice adjustable desk bed</h3>
+          <p class="card_why">Close to the Chumajor in design, sometimes cheaper. Worth checking both prices the day you order and taking whichever is lower.</p>
+          <div class="card_row">
+            <a class="card_open" href="https://www.amazon.com/dp/B0DSK78P5S" target="_blank" rel="noopener">Open</a>
+            <span class="text-mono card_source">Amazon</span>
+            <button class="card_button" type="button" aria-pressed="false">Got it</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section_block">
+      <div class="section_header">
+        <h2 class="section_verb">Nap</h2>
+        <p class="text-mono section_note">Kittens run cold</p>
+      </div>
+      <div class="section_grid">
+        <article class="card">
+          <h3 class="card_title">K&amp;H Thermo-Snuggle Cup bomber bed</h3>
+          <p class="card_why">Low-wattage heat in a deep cup shape. Small kittens lose heat fast and this is the bed they will pick over the expensive one.</p>
+          <div class="card_row">
+            <a class="card_open" href="https://www.amazon.com/dp/B07D9N48M2" target="_blank" rel="noopener">Open</a>
+            <span class="text-mono card_source">Amazon</span>
+            <button class="card_button" type="button" aria-pressed="false">Got it</button>
+          </div>
+        </article>
+        <article class="card">
+          <h3 class="card_title">valigogo Cloud Soft cushioned bed</h3>
+          <p class="card_why">An unheated backup so there are two beds and no negotiating. Two kittens will usually share one anyway, then stop sharing at about eight months.</p>
+          <div class="card_row">
+            <a class="card_open" href="https://www.amazon.com/dp/B0FN36SD53" target="_blank" rel="noopener">Open</a>
+            <span class="text-mono card_source">Amazon</span>
+            <button class="card_button" type="button" aria-pressed="false">Got it</button>
+          </div>
+        </article>
+        <article class="card">
+          <h3 class="card_title">Collapsible cat tunnel, scratch-resistant</h3>
+          <p class="card_why">Half hiding spot, half ambush point. Folds flat when you want the living room back.</p>
+          <div class="card_row">
+            <a class="card_open" href="https://www.amazon.com/dp/B0F38H4THR" target="_blank" rel="noopener">Open</a>
+            <span class="text-mono card_source">Amazon</span>
+            <button class="card_button" type="button" aria-pressed="false">Got it</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section_block">
+      <div class="section_header">
+        <h2 class="section_verb">Pounce</h2>
+        <p class="text-mono section_note">Three items</p>
+      </div>
+      <div class="section_grid">
+        <article class="card">
+          <h3 class="card_title">Catstages Tower of Tracks spinning ball toy</h3>
+          <p class="card_why">Three tiers of balls they can bat without you holding anything. Two cats can work on it at the same time, which is the whole point.</p>
+          <div class="card_row">
+            <a class="card_open" href="https://www.amazon.com/dp/B0812NMJJY" target="_blank" rel="noopener">Open</a>
+            <span class="text-mono card_source">Amazon</span>
+            <button class="card_button" type="button" aria-pressed="false">Got it</button>
+          </div>
+        </article>
+        <article class="card">
+          <h3 class="card_title">Colorful propeller tracking toys</h3>
+          <p class="card_why">Light, erratic, and easy to flick across a floor. Good for the chase-and-tackle stage kittens are in right now.</p>
+          <div class="card_row">
+            <a class="card_open" href="https://www.amazon.com/dp/B09H2CKNVH" target="_blank" rel="noopener">Open</a>
+            <span class="text-mono card_source">Amazon</span>
+            <button class="card_button" type="button" aria-pressed="false">Got it</button>
+          </div>
+        </article>
+        <article class="card">
+          <h3 class="card_title">Fashion's Talk variety kitty toy pack</h3>
+          <p class="card_why">A cheap assortment so you find out what each cat likes before spending real money. Expect half of it to end up under the couch.</p>
+          <div class="card_row">
+            <a class="card_open" href="https://www.amazon.com/dp/B01AHM6P18" target="_blank" rel="noopener">Open</a>
+            <span class="text-mono card_source">Amazon</span>
+            <button class="card_button" type="button" aria-pressed="false">Got it</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section_block">
+      <div class="section_header">
+        <h2 class="section_verb">Scratch</h2>
+        <p class="text-mono section_note">Get both textures</p>
+      </div>
+      <div class="section_grid">
+        <article class="card">
+          <h3 class="card_title">Zakkart vertical cardboard scratcher</h3>
+          <p class="card_why">Corrugated cardboard, standing upright. Cats want a full stretch, so height matters more than footprint.</p>
+          <div class="card_row">
+            <a class="card_open" href="https://www.amazon.com/dp/B0DP6D3TRB" target="_blank" rel="noopener">Open</a>
+            <span class="text-mono card_source">Amazon</span>
+            <button class="card_button" type="button" aria-pressed="false">Got it</button>
+          </div>
+        </article>
+        <article class="card">
+          <h3 class="card_title">Amazon Basics premium scratching post</h3>
+          <p class="card_why">Sisal instead of cardboard. Having two surfaces in two rooms is what keeps them off the sofa arm.</p>
+          <div class="card_row">
+            <a class="card_open" href="https://www.amazon.com/dp/B07G3SLKQ8" target="_blank" rel="noopener">Open</a>
+            <span class="text-mono card_source">Amazon</span>
+            <button class="card_button" type="button" aria-pressed="false">Got it</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section_block">
+      <div class="section_header">
+        <h2 class="section_verb">Dig</h2>
+        <p class="text-mono section_note">The unglamorous half</p>
+      </div>
+      <div class="section_grid">
+        <article class="card">
+          <h3 class="card_title">Yangbaga XL stainless steel litter box</h3>
+          <p class="card_why">Steel does not scratch up or hold odor the way plastic does, so it will not need replacing in two years. Extra large matters more than it sounds: cats want room to turn around, and a box that feels cramped is the usual reason one of them starts going next to it.</p>
+          <div class="card_row">
+            <a class="card_open" href="https://www.amazon.com/dp/B0FK8LTXNS" target="_blank" rel="noopener">Open</a>
+            <span class="text-mono card_source">Amazon</span>
+            <button class="card_button" type="button" aria-pressed="false">Got it</button>
+          </div>
+        </article>
+        <article class="card">
+          <h3 class="card_title">Pieviev double-layer litter mat</h3>
+          <p class="card_why">The top layer catches litter off their paws and it falls through to the bottom layer, so you tip it back into the box instead of vacuuming twice a day. One mat per box, right at the exit.</p>
+          <div class="card_row">
+            <a class="card_open" href="https://www.amazon.com/dp/B07NJ5SR5G" target="_blank" rel="noopener">Open</a>
+            <span class="text-mono card_source">Amazon</span>
+            <button class="card_button" type="button" aria-pressed="false">Got it</button>
+          </div>
+        </article>
+        <article class="card">
+          <h3 class="card_title">How many, and where</h3>
+          <p class="card_why">The rule is one box per cat plus one, so three for two kittens. Put them in different rooms rather than lined up in a row, and keep them away from the food. Most litter box problems are really placement problems.</p>
+          <div class="card_row">
+            <span class="text-mono card_source">Not a product, just the rule</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section_block">
+      <div class="section_header">
+        <h2 class="section_verb">Brush</h2>
+        <p class="text-mono section_note">Start now, not at age five</p>
+      </div>
+      <div class="section_grid">
+        <article class="card">
+          <h3 class="card_title">Virbac C.E.T. enzymatic toothpaste, poultry</h3>
+          <p class="card_why">Made for cats and safe to swallow, so skip anything from the human aisle. Poultry flavor is the one most cats tolerate.</p>
+          <div class="card_row">
+            <a class="card_open" href="https://www.amazon.com/dp/B00RZDXA7K" target="_blank" rel="noopener">Open</a>
+            <span class="text-mono card_source">Amazon</span>
+            <button class="card_button" type="button" aria-pressed="false">Got it</button>
+          </div>
+        </article>
+        <article class="card">
+          <h3 class="card_title">Kittyteeth soft-bristle cat toothbrush</h3>
+          <p class="card_why">Small head, soft bristles. Kittens who get used to this now are far easier to handle later, and dental work is the expensive kind of vet visit.</p>
+          <div class="card_row">
+            <a class="card_open" href="https://www.amazon.com/dp/B01406QXOQ" target="_blank" rel="noopener">Open</a>
+            <span class="text-mono card_source">Amazon</span>
+            <button class="card_button" type="button" aria-pressed="false">Got it</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section_block">
+      <div class="section_header">
+        <h2 class="section_verb">Eat</h2>
+        <p class="text-mono section_note">Two stations, not one</p>
+      </div>
+      <div class="section_grid">
+        <article class="card is-recommended">
+          <span class="text-mono card_badge">I have these</span>
+          <h3 class="card_title">Cat food bowls</h3>
+          <p class="card_why">Set them up in two spots rather than side by side. Cats guard food, and two kittens eating shoulder to shoulder is how one of them quietly starts skipping meals.</p>
+          <div class="card_row">
+            <a class="card_open" href="https://www.amazon.com/dp/B0FBLWR3SV" target="_blank" rel="noopener">Open</a>
+            <span class="text-mono card_source">Amazon</span>
+            <button class="card_button" type="button" aria-pressed="false">Got it</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section_block">
+      <div class="section_header">
+        <h2 class="section_verb">Drink</h2>
+        <p class="text-mono section_note">One item</p>
+      </div>
+      <div class="section_grid">
+        <article class="card is-recommended">
+          <span class="text-mono card_badge">I have this one</span>
+          <h3 class="card_title">PETKIT wireless water fountain</h3>
+          <p class="card_why">Cats drink more from moving water, and no cord means you can put it far away from the food. Rechargeable, so it is not tied to an outlet.</p>
+          <div class="card_row">
+            <a class="card_open" href="https://www.amazon.com/dp/B0CSNHMSXZ" target="_blank" rel="noopener">Open</a>
+            <span class="text-mono card_source">Amazon</span>
+            <button class="card_button" type="button" aria-pressed="false">Got it</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <aside class="panel_closing">
+      <h2 class="panel_heading">Still worth grabbing</h2>
+      <p class="panel_intro">None of these are fun to shop for, which is why they are down here instead of up there.</p>
+      <ul class="panel_list">
+        <li><span class="panel_lead">A carrier for each cat.</span> Two cats in one carrier is a bad vet trip.</li>
+        <li><span class="panel_lead">Nail clippers.</span> Trim every couple of weeks and the scratchers last longer.</li>
+      </ul>
+    </aside>
+
+    <footer class="text-mono page_footer">Made for two very small cats</footer>
+
+  </div>
+
+  <script>
+    const tally = document.getElementById('tally');
+    const buttons = document.querySelectorAll('.card_button');
+    let checkedCount = 0;
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.card');
+        const isChecked = card.classList.toggle('is-checked');
+        button.setAttribute('aria-pressed', String(isChecked));
+        button.textContent = isChecked ? 'Checked' : 'Got it';
+        checkedCount += isChecked ? 1 : -1;
+        tally.textContent = checkedCount + ' checked off';
+      });
+    });
+  </script>
+</body>
+</html>
